@@ -6,6 +6,7 @@
 * to the creator of the [upstream repo](https://github.com/ayroblu/ssr-create-react-app-v2) for the basics
 * to [the Redux subreddit example](http://redux.js.org/docs/advanced/ExampleRedditAPI.html)
 * to [this SSR Redux Prefetch guide](https://blog.tableflip.io/server-side-rendering-with-react-and-redux/)
+* https://reacttraining.com/react-router/web/guides/server-rendering/data-loading
 
 ## Capabilities
 * React + Redux + ReactRouter4

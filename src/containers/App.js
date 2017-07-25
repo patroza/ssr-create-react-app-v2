@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import FirstPage from './FirstPage'
-import SecondPage from './SecondPage'
+
 import NoMatch from '../components/NoMatch'
+import routes from '../routes'
 
 import { Helmet } from 'react-helmet'
 
@@ -17,8 +17,7 @@ export default class App extends Component {
 
         <h1>Server Side Rendering with Create React App v2</h1>
         <Switch>
-          <Route exact path="/" component={FirstPage} />
-          <Route path="/second" component={SecondPage} />
+          {routes.map(route => <Route key={route.path} {...route} />)}
           <Route component={NoMatch} />
         </Switch>
       </div>

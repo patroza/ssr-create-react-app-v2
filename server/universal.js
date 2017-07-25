@@ -6,12 +6,12 @@ import { Helmet } from 'react-helmet'
 const React = require('react')
 const { Provider } = require('react-redux')
 const { renderToString } = require('react-dom/server')
-const { StaticRouter } = require('react-router-dom')
+const { StaticRouter, matchPath } = require('react-router-dom')
 
 const { default: configureStore } = require('../src/store')
 const { default: App } = require('../src/containers/App')
-// TODO: Is there a better/more dynamic way than including all source files here as the app grows?
-const { default: FirstPage } = require('../src/containers/FirstPage')
+
+import routes from '../src/routes'
 
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
@@ -24,11 +24,19 @@ module.exports = function universalLoader(req, res) {
     const context = {}
     const store = configureStore()
 
-    // TODO: For better performance, fetch only what we need to render the page properly - Casus knackus hier: Auf welcher Page sind wir gerade? ^^
-    const requiredData = [
-      FirstPage.fetchData(store)
-      // ...
-    ]
+    const requiredData = []
+    // use `some` to imitate `<Switch>` behavior of selecting only
+    // the first to match
+    routes.some(route => {
+      // use `matchPath` here
+      const match = matchPath(req.url, route)
+
+      if (match && route.component && route.component.fetchData) {
+        requiredData.push(route.component.fetchData(store))
+      }
+
+      return match
+    })
 
     Promise.all(requiredData).then(() => {
       const markup = renderToString(
