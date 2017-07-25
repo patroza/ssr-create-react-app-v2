@@ -14,9 +14,7 @@
 * Prefetch data
 * Shared Initial State
 * React helmet & server side rendering
-
-### Nice 2 have
-
+* 404 status code ^.^
 
 ## Install
 ``` bash

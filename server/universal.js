@@ -60,7 +60,7 @@ module.exports = function universalLoader(req, res) {
           .replace('{{HELMET_TITLE}}', helmet.title.toString())
           .replace('{{HELMET_META}}', helmet.meta.toString())
 
-        res.send(RenderedApp)
+        res.status(context.statusCode || 200).send(RenderedApp)
       }
     })
   })
