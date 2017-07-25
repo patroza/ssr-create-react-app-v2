@@ -5,6 +5,8 @@ import { fetchPostsIfNeeded } from '../actions/posts'
 import { Link } from 'react-router-dom'
 import './FirstPage.css'
 
+import { Helmet } from 'react-helmet'
+
 class FirstPage extends Component {
   static fetchData(store) {
     return store.dispatch(fetchPostsIfNeeded())
@@ -24,6 +26,13 @@ class FirstPage extends Component {
 
     return (
       <div className="bold">
+        {posts &&
+          <Helmet>
+            <title>
+              {posts.length + ' Posts'}
+            </title>
+          </Helmet>}
+
         <h2>First Page</h2>
         <p>{`b64: ${b64}`}</p>
         <Link to={'/second'}>Second</Link>

@@ -12,9 +12,10 @@
 * SSR
 * Prefetch data
 * Shared Initial State
+* React helmet & server side rendering
 
 ### Nice 2 have
-* [ ] React helmet for Meta data
+
 
 ## Install
 ``` bash
