@@ -1,34 +1,47 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
-import * as userActions from '../actions/user'
+import { fetchPostsIfNeeded } from '../actions/posts'
 import { Link } from 'react-router-dom'
 import './FirstPage.css'
 
 class FirstPage extends Component {
+  static fetchData(store) {
+    return store.dispatch(fetchPostsIfNeeded())
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(fetchPostsIfNeeded())
+  }
+
   render() {
-    const b64 = this.props.staticContext ? 'wait for it' : window.btoa('wait for it')
+    const { posts } = this.props
+
+    const b64 = this.props.staticContext
+      ? 'wait for it'
+      : window.btoa('wait for it')
+
     return (
-      <div className='bold'>
+      <div className="bold">
         <h2>First Page</h2>
-        <p>{`Email: ${this.props.user.email}`}</p>
         <p>{`b64: ${b64}`}</p>
         <Link to={'/second'}>Second</Link>
+        <ul>
+          {posts &&
+            posts.map(post =>
+              <li key={post.id}>
+                {post.permalink}
+              </li>
+            )}
+        </ul>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  posts: state.posts.items
 })
 
-const mapDispatchToProps = dispatch => ({
-  userActions: bindActionCreators(userActions, dispatch)
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FirstPage)
+export default connect(mapStateToProps)(FirstPage)
