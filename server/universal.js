@@ -4,10 +4,12 @@ const fs = require('fs')
 const React = require('react')
 const {Provider} = require('react-redux')
 const {renderToString} = require('react-dom/server')
-const {StaticRouter} = require('react-router-dom')
+const {StaticRouter, matchPath} = require('react-router-dom')
 
 const {default: configureStore} = require('../src/store')
 const {default: App} = require('../src/containers/App')
+
+const {default: routes} = require('../src/routes')
 
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
@@ -19,25 +21,41 @@ module.exports = function universalLoader(req, res) {
     }
     const context = {}
     const store = configureStore()
-    const markup = renderToString(
-      <Provider store={store}>
-        <StaticRouter
-          location={req.url}
-          context={context}
-        >
-          <App/>
-        </StaticRouter>
-      </Provider>
-    )
 
-    if (context.url) {
-      // Somewhere a `<Redirect>` was rendered
-      redirect(301, context.url)
-    } else {
-      // we're good, send the response
-      const RenderedApp = htmlData.replace('{{SSR}}', markup)
-      res.send(RenderedApp)
-    }
+    const requiredData = []
+    // use `some` to imitate `<Switch>` behavior of selecting only
+    // the first to match
+    routes.some(route => {
+      const match = matchPath(req.url, route)
+
+      if (match && route.component && route.component.fetchData) {
+        requiredData.push(route.component.fetchData(store))
+      }
+
+      return match
+    })
+
+    Promise.all(requiredData).then(() => {
+      const markup = renderToString(
+        <Provider store={store}>
+          <StaticRouter
+            location={req.url}
+            context={context}
+          >
+            <App/>
+          </StaticRouter>
+        </Provider>
+      )
+
+      if (context.url) {
+        // Somewhere a `<Redirect>` was rendered
+        redirect(301, context.url)
+      } else {
+        // we're good, send the response
+        const RenderedApp = htmlData.replace('{{SSR}}', markup)
+        res.send(RenderedApp)
+      }
+    })
   })
 }
 

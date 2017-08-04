@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import { fetchPostsIfNeeded } from '../actions/posts'
 
 class PostsApiPage extends Component {
+  static fetchData(store) {
+    return store.dispatch(fetchPostsIfNeeded())
+  }
+
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchPostsIfNeeded())
