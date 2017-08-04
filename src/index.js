@@ -8,8 +8,8 @@ import './index.css'
 import App from './containers/App'
 import registerServiceWorker from './registerServiceWorker'
 
-// Let the reducers handle initial state
-const initialState = {}
+// If provided by server, use it, else let the reducers handle initial state
+const initialState = window.DATA ? window.DATA : {}
 const store = configureStore(initialState)
 
 ReactDOM.render(

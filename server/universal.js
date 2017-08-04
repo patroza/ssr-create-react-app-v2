@@ -52,7 +52,10 @@ module.exports = function universalLoader(req, res) {
         redirect(301, context.url)
       } else {
         // we're good, send the response
-        const RenderedApp = htmlData.replace('{{SSR}}', markup)
+        const RenderedApp = htmlData
+          .replace('{{SSR}}', markup)
+          .replace('{{WINDOW_DATA}}', JSON.stringify(store.getState()))
+
         res.send(RenderedApp)
       }
     })
