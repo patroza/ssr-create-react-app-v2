@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import reducers from './reducers'
 //import createLogger from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
 //import createSagaMiddleware from 'redux-saga'
 
 //const logger = createLogger()
@@ -9,6 +10,7 @@ import reducers from './reducers'
 export default function configureStore(initialState = {}) {
   // Create the store with two middlewares
   const middlewares = [
+    thunkMiddleware
   //  sagaMiddleware
   //, logger
   ]
