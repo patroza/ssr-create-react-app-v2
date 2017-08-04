@@ -15,6 +15,8 @@ class FirstPage extends Component {
         <p>{`Email: ${this.props.user.email}`}</p>
         <p>{`b64: ${b64}`}</p>
         <Link to={'/second'}>Second</Link>
+        {' '}
+        <Link to={'/posts'}>Posts API Example</Link>
       </div>
     )
   }
