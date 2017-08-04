@@ -1,3 +1,6 @@
+require('es6-promise').polyfill()
+require('fetch-everywhere')
+
 const app = require('./app')
 
 const PORT = process.env.PORT || 3001
