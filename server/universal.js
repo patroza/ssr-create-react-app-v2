@@ -29,7 +29,7 @@ module.exports = function universalLoader(req, res) {
       const match = matchPath(req.url, route)
 
       if (match && route.component && route.component.fetchData) {
-        requiredData.push(route.component.fetchData(store))
+        requiredData.push(route.component.fetchData(store, match))
       }
 
       return match
