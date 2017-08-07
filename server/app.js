@@ -13,9 +13,7 @@ require('babel-register')({
 
 // routes
 const index = require('./routes/index')
-const api = require('./routes/api')
 const universalLoader = require('./universal')
-
 
 const app = express()
 
@@ -33,8 +31,6 @@ app.use('/', index)
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
-
-app.use('/api', api)
 
 // Always return the main index.html, so react-router render the route in the client
 app.use('/', universalLoader)

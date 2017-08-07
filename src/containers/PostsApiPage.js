@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import { fetchPostsIfNeeded } from '../actions/posts'
 
@@ -18,7 +20,15 @@ class PostsApiPage extends Component {
 
     return (
       <div>
-        <h2>Posts</h2>
+        <Helmet>
+          <title>Posts</title>
+          <meta
+            name="description"
+            content={'Awesome ' + (posts ? posts.length : '') + ' posts'}
+          />
+        </Helmet>
+
+        <h1>Posts</h1>
         <ul>
           {posts &&
             posts.map(post =>
@@ -30,6 +40,15 @@ class PostsApiPage extends Component {
       </div>
     )
   }
+}
+
+PostsApiPage.propTypes = {
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired
+    })
+  )
 }
 
 const mapStateToProps = state => ({

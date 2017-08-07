@@ -5,34 +5,17 @@ import { Helmet } from 'react-helmet'
 import routes from '../routes'
 import NoMatch from '../components/NoMatch'
 
-export default class App extends Component {
+class App extends Component {
   render() {
     return (
       <div>
-        <Helmet
-          defaultTitle="ssr-create-react-app-v2"
-          titleTemplate="%s - ssr-create-react-app-v2"
-        >
+        <Helmet defaultTitle="Cool app" titleTemplate="%s - Cool app">
           <meta
             name="description"
-            content="This is the v2, its much better written, and uses react-router v4, which is actually pretty nice"
+            content="This is the default meta description"
           />
         </Helmet>
 
-        <h1>Server Side Rendering with Create React App v2</h1>
-        <p>Hey, so I've rewritten this example with react-router v4</p>
-        <p>
-          This code is on github:{' '}
-          <a href="https://github.com/ayroblu/ssr-create-react-app-v2">
-            https://github.com/ayroblu/ssr-create-react-app-v2
-          </a>
-        </p>
-        <p>
-          Medium article:{' '}
-          <a href="https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9">
-            https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9
-          </a>
-        </p>
         <Switch>
           {routes.map(route => <Route key={route.path} {...route} />)}
           <Route component={NoMatch} />
@@ -41,3 +24,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default App

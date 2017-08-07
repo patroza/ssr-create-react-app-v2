@@ -7,11 +7,11 @@ node_modules
 coverage
 
 # production
-build
-dist
+/build
 
 # misc
 .DS_Store
 .env
 .vscode
 npm-debug.log
+debug.log

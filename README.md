@@ -1,19 +1,16 @@
-Server Side Rendering with Create React App
-===========================================
+# React Router Redux SSR Prefetch Helmet Boilerplate
 
-This is the v2 version of my react app, checkout my article here: https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9
+## Capabilities
+* React + Redux + ReactRouter4
+* SSR
+* Prefetch data
+* Shared Initial State
+* React helmet & server side rendering
+* 404 status code ^.^
 
-Install
--------
-```bash
+## Install
+``` bash
 npm install
 npm run build
 npm run start:server
 ```
-
-### Development
-This just runs create react app, its great!
-```bash
-npm start
-```
-

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-//import './App.css'
 
 class NoMatch extends Component {
   static contextTypes = {
@@ -15,13 +14,8 @@ class NoMatch extends Component {
   }
 
   render() {
-    return (
-      <div>
-        Sorry, page not found
-      </div>
-    )
+    return <div>Sorry, page not found</div>
   }
 }
 
 export default NoMatch
-
