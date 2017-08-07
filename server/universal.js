@@ -2,19 +2,19 @@ const path = require('path')
 const fs = require('fs')
 
 const React = require('react')
-const {Provider} = require('react-redux')
-const {renderToString} = require('react-dom/server')
-const {StaticRouter, matchPath} = require('react-router-dom')
+const { Provider } = require('react-redux')
+const { renderToString } = require('react-dom/server')
+const { StaticRouter, matchPath } = require('react-router-dom')
 
-const {default: configureStore} = require('../src/store')
-const {default: App} = require('../src/containers/App')
+const { default: configureStore } = require('../src/store')
+const { default: App } = require('../src/containers/App')
 
-const {default: routes} = require('../src/routes')
+const { default: routes } = require('../src/routes')
 
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
 
-  fs.readFile(filePath, 'utf8', (err, htmlData)=>{
+  fs.readFile(filePath, 'utf8', (err, htmlData) => {
     if (err) {
       console.error('read err', err)
       return res.status(404).end()
@@ -38,11 +38,8 @@ module.exports = function universalLoader(req, res) {
     Promise.all(requiredData).then(() => {
       const markup = renderToString(
         <Provider store={store}>
-          <StaticRouter
-            location={req.url}
-            context={context}
-          >
-            <App/>
+          <StaticRouter location={req.url} context={context}>
+            <App />
           </StaticRouter>
         </Provider>
       )
@@ -56,9 +53,8 @@ module.exports = function universalLoader(req, res) {
           .replace('{{SSR}}', markup)
           .replace('{{WINDOW_DATA}}', JSON.stringify(store.getState()))
 
-        res.send(RenderedApp)
+        res.status(context.statusCode || 200).send(RenderedApp)
       }
     })
   })
 }
-
