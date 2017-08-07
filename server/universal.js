@@ -2,6 +2,7 @@ const path = require('path')
 const fs = require('fs')
 
 const React = require('react')
+import { Helmet } from 'react-helmet'
 const { Provider } = require('react-redux')
 const { renderToString } = require('react-dom/server')
 const { StaticRouter, matchPath } = require('react-router-dom')
@@ -48,10 +49,13 @@ module.exports = function universalLoader(req, res) {
         // Somewhere a `<Redirect>` was rendered
         redirect(301, context.url)
       } else {
+        const helmet = Helmet.renderStatic()
         // we're good, send the response
         const RenderedApp = htmlData
           .replace('{{SSR}}', markup)
           .replace('{{WINDOW_DATA}}', JSON.stringify(store.getState()))
+          .replace('{{HELMET_TITLE}}', helmet.title.toString())
+          .replace('{{HELMET_META}}', helmet.meta.toString())
 
         res.status(context.statusCode || 200).send(RenderedApp)
       }
