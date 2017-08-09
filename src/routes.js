@@ -1,6 +1,9 @@
 import FirstPage from './containers/FirstPage'
 import SecondPage from './containers/SecondPage'
 import PostsApiPage from './containers/PostsApiPage'
+import PostComments from './containers/PostComments'
+
+import NoMatch from './components/NoMatch'
 
 const routes = [
   {
@@ -14,7 +17,16 @@ const routes = [
   },
   {
     path: '/posts',
-    component: PostsApiPage
+    component: PostsApiPage,
+    routes: [
+      {
+        path: '/posts/withcommentsfor/:id',
+        component: PostComments
+      }
+    ]
+  },
+  {
+    component: NoMatch
   }
 ]
 
