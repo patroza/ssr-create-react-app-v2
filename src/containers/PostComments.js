@@ -4,7 +4,17 @@ import PropTypes from 'prop-types'
 
 import { fetchCommentsIfNeeded } from '../actions/comments'
 
+const isEqual = require('lodash.isequal')
+
 class PostComments extends Component {
+  shouldComponentUpdate(nextProps) {
+    if (!isEqual(this.props.comments, nextProps.comments)) {
+      return true
+    }
+
+    return false
+  }
+
   static fetchData(store, match) {
     return store.dispatch(fetchCommentsIfNeeded(match.params.id))
   }
