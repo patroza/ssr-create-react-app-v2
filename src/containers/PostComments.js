@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchCommentsIfNeeded } from '../actions/comments'
 
-class PostsApiPage extends Component {
+class PostComments extends Component {
   static fetchData(store, match) {
     return store.dispatch(fetchCommentsIfNeeded(match.params.id))
   }
@@ -52,4 +52,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(PostsApiPage)
+export default connect(mapStateToProps)(PostComments)
