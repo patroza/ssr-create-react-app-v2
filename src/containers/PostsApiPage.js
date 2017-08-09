@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { Link, Route } from 'react-router-dom'
+import PostComments from './PostComments'
+
 import { fetchPostsIfNeeded } from '../actions/posts'
 
 class PostsApiPage extends Component {
@@ -19,12 +22,15 @@ class PostsApiPage extends Component {
     return (
       <div>
         <h2>Posts</h2>
+        <Route path="/posts/withcommentsfor/:id" component={PostComments} />
         <ul>
           {posts &&
             posts.map(post =>
-              <li key={post.id}>
-                {post.title}
-              </li>
+              <Link key={post.id} to={`/posts/withcommentsfor/${post.id}`}>
+                <li>
+                  {post.title}
+                </li>
+              </Link>
             )}
         </ul>
       </div>
