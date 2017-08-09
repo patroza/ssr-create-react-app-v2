@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import { fetchCommentsIfNeeded } from '../actions/comments'
 
 class PostsApiPage extends Component {
+  static fetchData(store, match) {
+    return store.dispatch(fetchCommentsIfNeeded(match.params.id))
+  }
+
   fetchCommentsData() {
     const { dispatch } = this.props
     dispatch(fetchCommentsIfNeeded(this.props.match.params.id))
