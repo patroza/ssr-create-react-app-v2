@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import { fetchCommentsIfNeeded } from '../actions/comments'
 
@@ -42,6 +43,16 @@ class PostComments extends Component {
       </div>
     )
   }
+}
+
+PostComments.propTypes = {
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      body: PropTypes.string
+    })
+  )
 }
 
 const mapStateToProps = (state, ownProps) => {
