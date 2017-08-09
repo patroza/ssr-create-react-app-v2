@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import { Link } from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
+
 import { fetchPostsIfNeeded } from '../actions/posts'
 
 class PostsApiPage extends Component {
@@ -16,7 +19,7 @@ class PostsApiPage extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, route } = this.props
 
     return (
       <div>
@@ -29,12 +32,15 @@ class PostsApiPage extends Component {
         </Helmet>
 
         <h1>Posts</h1>
+        {renderRoutes(route.routes)}
         <ul>
           {posts &&
             posts.map(post =>
-              <li key={post.id}>
-                {post.title}
-              </li>
+              <Link key={post.id} to={`/posts/withcommentsfor/${post.id}`}>
+                <li>
+                  {post.title}
+                </li>
+              </Link>
             )}
         </ul>
       </div>
