@@ -3,13 +3,10 @@ var fs = require('fs');
 var webpack = require('webpack');
 
 var nodeModules = {};
+const excludes = ['.bin'];
 fs.readdirSync('node_modules')
-  .filter(function (x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function (mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
+  .filter((x) => excludes.indexOf(x) === -1)
+  .forEach((mod) =>nodeModules[mod] = 'commonjs ' + mod);
 
 const autoprefixer = require('autoprefixer');
 
