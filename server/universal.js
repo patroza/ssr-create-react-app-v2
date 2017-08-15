@@ -12,7 +12,7 @@ const { default: configureStore } = require('../src/store')
 const { default: App } = require('../src/containers/App')
 
 import routes from '../src/routes'
-import styles from '../src/index.css';
+import styles from '../src/index.css'
 
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
@@ -22,13 +22,12 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    const css = [styles._getCss()]; // CSS for all rendered React components 
+    const css = [styles._getCss()] // CSS for all rendered React components 
     const insertCss = (...styles) => {
       // eslint-disable-next-line no-underscore-dangle
-      styles.forEach(style => css.push(style._getCss()));
-    };
-    const context = { insertCss };
-  
+      styles.forEach(style => css.push(style._getCss()))
+    }
+    const context = { insertCss }
     const store = configureStore()
 
     const requiredData = []
