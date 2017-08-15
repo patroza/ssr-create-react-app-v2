@@ -63,6 +63,7 @@ const config = {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: require.resolve('file-loader')
       },
+      // TODO: use extractTextPlugin for external CSS, onetime payload.
       {
         test: /\.css$/,
         include: /index\.css/,
