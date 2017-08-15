@@ -11,9 +11,6 @@ const { StaticRouter, matchPath } = require('react-router-dom')
 const { default: configureStore } = require('../src/store')
 const { default: App } = require('../src/containers/App')
 
-// workaround for context problems
-import {functions} from 'isomorphic-style-loader/lib/withStyles';
-
 import routes from '../src/routes'
 import styles from '../src/index.css';
 
@@ -26,10 +23,11 @@ module.exports = function universalLoader(req, res) {
       return res.status(404).end()
     }
     const css = [styles._getCss()]; // CSS for all rendered React components 
-    const insertCss = (styles) => css.push(styles._getCss());
+    const insertCss = (...styles) => {
+      // eslint-disable-next-line no-underscore-dangle
+      styles.forEach(style => css.push(style._getCss()));
+    };
     const context = { insertCss };
-    // workaround for context problems
-    functions.insertCss = insertCss;
   
     const store = configureStore()
 
@@ -51,7 +49,7 @@ module.exports = function universalLoader(req, res) {
       const markup = renderToString(
         <Provider store={store}>
           <StaticRouter location={req.url} context={context}>
-            <App />
+            <App context={context} />
           </StaticRouter>
         </Provider>
       )
