@@ -1,17 +1,16 @@
-var path = require('path');
-var fs = require('fs');
-var webpack = require('webpack');
+import path from 'path'
+import fs from 'fs'
+import webpack from 'webpack'
+import autoprefixer from 'autoprefixer'
 
-var nodeModules = {};
-const excludes = ['.bin'];
+const externals = {}
+const excludes = ['.bin']
 fs.readdirSync('node_modules')
   .filter((x) => excludes.indexOf(x) === -1)
-  .forEach((mod) =>nodeModules[mod] = 'commonjs ' + mod);
+  .forEach((mod) =>externals[mod] = 'commonjs ' + mod)
 
-const autoprefixer = require('autoprefixer');
-
-var config = {
-  externals: nodeModules,
+const config = {
+  externals,
   target: 'node',
 
   resolve: {
@@ -155,6 +154,6 @@ var config = {
     __filename: false,
     __dirname: false
   }
-};
+}
 
-module.exports = config;
+export default config

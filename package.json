@@ -39,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:server": "cross-env NODE_ENV=production && node build/server.js",
-    "build:server": "cross-env NODE_ENV=production webpack --config server/webpack.config.js",
+    "build:server": "cross-env NODE_ENV=production webpack --config server/webpack.config.babel.js",
     "build": "react-scripts build",
     "all-server": "npm run build && npm run build:server && npm run start:server",
     "test": "react-scripts test --env=jsdom",

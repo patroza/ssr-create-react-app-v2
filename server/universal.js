@@ -1,15 +1,15 @@
-const path = require('path')
-const fs = require('fs')
+import path from 'path'
+import fs from 'fs'
 
 import { Helmet } from 'react-helmet'
 
-const React = require('react')
-const { Provider } = require('react-redux')
-const { renderToString } = require('react-dom/server')
-const { StaticRouter, matchPath } = require('react-router-dom')
+import React from 'react'
+import { Provider } from 'react-redux'
+import { renderToString } from 'react-dom/server'
+import { StaticRouter, matchPath } from 'react-router-dom'
 
-const { default: configureStore } = require('../src/store')
-const { default: App } = require('../src/containers/App')
+import configureStore from '../src/store'
+import App from '../src/containers/App'
 
 import routes from '../src/routes'
 import styles from '../src/index.css'
