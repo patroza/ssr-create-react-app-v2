@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 import { fetchPostsIfNeeded } from '../actions/posts'
 import { Link } from 'react-router-dom'
-import './FirstPage.css'
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './FirstPage.css'
 
 import { Helmet } from 'react-helmet'
 
@@ -25,7 +26,7 @@ class FirstPage extends Component {
       : window.btoa('wait for it')
 
     return (
-      <div className="bold">
+      <div className={styles.bold}>
         {posts &&
           <Helmet>
             <title>
@@ -53,4 +54,4 @@ const mapStateToProps = state => ({
   posts: state.posts.items
 })
 
-export default connect(mapStateToProps)(FirstPage)
+export default connect(mapStateToProps)(withStyles(styles)(FirstPage))

@@ -11,7 +11,11 @@ const { StaticRouter, matchPath } = require('react-router-dom')
 const { default: configureStore } = require('../src/store')
 const { default: App } = require('../src/containers/App')
 
+// workaround for context problems
+import {functions} from 'isomorphic-style-loader/lib/withStyles';
+
 import routes from '../src/routes'
+import styles from '../src/index.css';
 
 module.exports = function universalLoader(req, res) {
   const filePath = path.resolve(__dirname, '..', 'build', 'index.html')
@@ -21,7 +25,12 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    const context = {}
+    const css = [styles._getCss()]; // CSS for all rendered React components 
+    const insertCss = (styles) => css.push(styles._getCss());
+    const context = { insertCss };
+    // workaround for context problems
+    functions.insertCss = insertCss;
+  
     const store = configureStore()
 
     const requiredData = []
@@ -52,10 +61,10 @@ module.exports = function universalLoader(req, res) {
         redirect(301, context.url)
       } else {
         const helmet = Helmet.renderStatic()
-
         // we're good, send the response
         const RenderedApp = htmlData
           .replace('{{SSR}}', markup)
+          .replace('{{STYLES}}', `<style type="text/css">${css.join('')}</style>`)
           .replace('{{WINDOW_DATA}}', JSON.stringify(store.getState()))
           .replace('{{HELMET_TITLE}}', helmet.title.toString())
           .replace('{{HELMET_META}}', helmet.meta.toString())
