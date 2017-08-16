@@ -1,7 +1,6 @@
 import path from 'path'
 import fs from 'fs'
 import webpack from 'webpack'
-import autoprefixer from 'autoprefixer'
 
 const externals = {}
 const excludes = ['.bin']
@@ -86,15 +85,8 @@ const config = {
               ident: 'postcss',
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
-                autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009',
-                }),
+                require('postcss-import'),
+                require('postcss-cssnext')(),
               ],
             },
           },
@@ -123,15 +115,8 @@ const config = {
               ident: 'postcss',
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
-                autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009',
-                }),
+                require('postcss-import'),
+                require('postcss-cssnext')(),
               ],
             },
           },

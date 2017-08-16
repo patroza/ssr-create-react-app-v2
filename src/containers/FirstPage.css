@@ -1,3 +1,10 @@
+@import "./shared.css";
+
 .bold {
   font-weight: bold;
+
+  & li {
+    font-size: 60px;
+    color: var(--mainColor);
+  }
 }
